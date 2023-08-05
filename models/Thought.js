@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-
+const { ObjectId } = require('mongoose').Types;
 
 const thoughtSchema = new Schema(
     {
@@ -14,10 +14,11 @@ const thoughtSchema = new Schema(
             default: Date.now,
             get: timeStamp => timeStamp // Convert to dayJS formatting
         },
-        userName: {
-            type: String,
-            required: true,
+        username: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
         },
+
         reactions: [reactionSchema],
     }
 );
@@ -28,4 +29,4 @@ thoughtSchema.virtual('thoughtCount').get(function() {
 
 const Thought = model('thought', thoughtSchema);
 
-model.exports = Thought;
+module.exports = Thought;

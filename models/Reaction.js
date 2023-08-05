@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { ObjectId } = require('mongoose').Types;
 
 const reactionSchema = new Schema(
     {
@@ -12,15 +13,19 @@ const reactionSchema = new Schema(
             max_length: 280,
         },
         username: {
-            type: String,
-            required: true,
+            type: Schema.Types.ObjectId,
+            ref: 'User',
         },
         createdAt: {
             type: Date,
             default: Date.now,
             get: timeStamp => timeStamp
         },
+        thoughtId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Thought'
+        },
     }
 );
 
-model.exports = reactionSchema;
+module.exports = reactionSchema;
